@@ -1,0 +1,152 @@
+:root {
+  --main-green-color: #74b084;  
+  --main-grey-color: lightgrey;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+header {
+  margin: auto 5vw auto 5vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.day-grid {
+  width: 10.0vw;
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  /* gap: 0.5vw;
+  padding: 0.25vw; */
+}
+
+.week-grid {
+  margin-left: 5vw;
+  width: 15.0vw;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(1fr);
+  /* gap: 0.5vw;
+  padding: 0.25vw; */
+}
+
+.time-slot {
+  cursor: pointer;
+  height: 10vh;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  border: 1px solid silver;
+}
+
+.time-slot p {
+  margin: 2px;
+}
+
+.scheduling-form--container {
+  background-color: #f5f0f0;
+  border-radius: 5px;
+  box-shadow: 1px 1px gray;
+  margin: auto;
+  z-index: 1;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+
+.admin-form--container {
+  position: fixed;
+  overflow-y: scroll;
+  height: 80%;
+  top: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 0);
+}
+
+.scheduling-form--main-content {
+  padding: 0vw 2vw 1vw 2vw;
+}
+
+/* .scheduling-form-container form {
+  margin: 2vw;
+} */
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  margin: 2vw;
+}
+
+.profile-container img {
+  height: 8vh;
+  margin-right: 1vw;
+}
+
+.home-container {
+  margin: auto;
+  padding-top: 15vw;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 5px;
+  width: 25vw;
+  max-height: 10vh;
+  padding: 1vw 2vw 1vw 2vw;
+  margin: 1vw;
+	border: none;
+	background-color: var(--main-green-color);
+	font-size: 2.8vh;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.scheduling-form--button {
+  width: auto;
+  background-color: var(--main-grey-color);
+  border: 1px solid black;
+}
+
+.date-title {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.login-btn {
+  width: auto;
+  background-color: var(--main-grey-color);
+}
+
+/* TODO: Arruma depois */
+.sidenav {
+  position: fixed;
+  overflow-y: scroll;
+  height: 100%;
+  width: 50%;
+  left: -18%;
+  top: 20%;
+  bottom: 50%;
+  transform: translate(-50%, 0);
+  border: 1px solid black;
+}
