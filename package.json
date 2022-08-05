@@ -2,6 +2,9 @@
   "name": "js_scheduler",
   "type": "module",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.15.1"
+  },
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.10.2",
