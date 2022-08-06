@@ -25,4 +25,4 @@ const months = [
         "dezembro"
         ]
 
-export { weekDays, months, SERVER_PORT };
+export { weekDays, months, SERVER_PORT }; //
