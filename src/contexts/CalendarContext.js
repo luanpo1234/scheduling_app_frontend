@@ -6,6 +6,7 @@ const CalendarContext = React.createContext();
 
 const CalendarContextProvider = ({ children }) => {
     const DOMAIN = process.env.REACT_APP_DOMAIN;
+    const ADMIN_SUB = process.env.REACT_APP_ADMIN_SUB;
 
     const GET_USER_SCHEDULES_PATH = `${DOMAIN}/getUserSchedules`;
     const GET_TIMESLOTS_PATH = `${DOMAIN}/getAvailableTimeslots`;
@@ -18,7 +19,7 @@ const CalendarContextProvider = ({ children }) => {
     //Gambiarra para simular admin
     useEffect(() => {
         if(user) {
-        setIsAdmin(user.nickname==="admin")
+        setIsAdmin(user.sub===ADMIN_SUB)
     }
     }, [user])
 
