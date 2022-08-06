@@ -1,6 +1,7 @@
 import { months } from "../utils/globalVars";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import Loading from "./Loading";
 import Week from "./Week";
 
 const Calendar = (props) => {
@@ -40,10 +41,10 @@ const Calendar = (props) => {
         const newDate = incrementDate(week[0], summand);
         setCurrWeek(populateWeek(newDate));
     }
-    console.log(calendarType);
 
     return (
         <div className="week-grid">
+            {props.scheduled.length === 0 && <div className="loading-container"><Loading /></div>}
             <div className="date-title">
                 <h3>{months[currWeek[0].getMonth()]}</h3>
                 <h4>{currWeek[0].getFullYear()}</h4>

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { CalendarContext } from "../contexts/CalendarContext";
 import Sidebar from "./Sidebar";
 
-const Home = () => {
-    const { scheduled, getData, GET_USER_SCHEDULES_PATH, setScheduled } = useContext(CalendarContext);
+const Home = ({ scheduled }) => {
+    const { getData, GET_USER_SCHEDULES_PATH } = useContext(CalendarContext);
     
     // Acho que isso seria o caso pra um Hook customizado:
     useEffect(() => {

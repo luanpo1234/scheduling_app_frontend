@@ -26,14 +26,16 @@ const CalendarContextProvider = ({ children }) => {
     const deleteDataAndGetNewData = (postPath, getPath, parameters) => {
         Axios.delete(postPath, { params: parameters })
         .then(response => console.log("Data entry deleted!"))
-        .then(response => getData(getPath));
+        .then(response => getData(getPath))
+        .catch(error => alert("Erro de conexão: não foi possível deletar o item"));
     };
 
     const addDataAndGetNewData = (postPath, getPath, data) => {
         console.log("adding");
         Axios.post(postPath, data)
         .then(response => console.log("New data entry!"))
-        .then(response => getData(getPath));
+        .then(response => getData(getPath))
+        .catch(error => alert("Erro de conexão: não foi possível inserir o item"));
     };
 
     const getData = useCallback((path, query) => { //renomeia pra getAndSetData
@@ -50,6 +52,7 @@ const CalendarContextProvider = ({ children }) => {
                 {...query, sub: user.sub};
             Axios.get(path, { params: parameters })
             .then(response => {setterFunc(response.data)})
+            .catch(error => alert("Erro de conexão: não foi possível obter os dados do calendário."))
     }}, [isAdmin, user]);
 
     useEffect(() => {      

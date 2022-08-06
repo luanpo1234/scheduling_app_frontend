@@ -150,3 +150,12 @@ button {
   transform: translate(-50%, 0);
   border: 1px solid black;
 }
+
+.loading-container {
+  margin: auto;
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

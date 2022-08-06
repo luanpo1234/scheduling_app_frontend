@@ -1,3 +1,4 @@
+import Loading from "./Loading";
 
 const Sidebar = ({ scheduled }) => {
 
@@ -28,7 +29,8 @@ const Sidebar = ({ scheduled }) => {
             <h3>Minhas aulas</h3>
             <hr />
             <div>
-            {
+                {scheduled.length === 0 ?
+                <div className="loading-container"><Loading /></div> :
                 scheduled.map(item =>
                     <div style={getColors(item.status)}>
                         <p>
