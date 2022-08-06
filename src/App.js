@@ -5,26 +5,20 @@ import Home from './components/Home';
 import Calendar from "./components/Calendar";
 import ProtectedComponent from "./auth/src/auth/ProtectedComponent";
 
-import { useContext } from "react";
-import { CalendarContext } from "./contexts/CalendarContext";
-
 const App = () => {
   const START_TIME_RANGE = 7;
   const END_TIME_RANGE = 22;
-
-  const { scheduled } = useContext(CalendarContext);
 
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Home scheduled={scheduled}/>} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/:calendarType"
           element={<ProtectedComponent 
                       component={Calendar}
                       dailyTimeRange={[START_TIME_RANGE, END_TIME_RANGE]}
-                      scheduled={scheduled}
                     />
                   }
         />

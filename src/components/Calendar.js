@@ -1,13 +1,17 @@
 import { months } from "../utils/globalVars";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { CalendarContext } from "../contexts/CalendarContext";
 import Loading from "./Loading";
 import Week from "./Week";
 
 const Calendar = (props) => {
     // Não acho ideal pegar isso do params, repense
     const { calendarType } = useParams();
+
+    const { scheduled } = useContext(CalendarContext);
     
+    // Increment date by `increment` days 
     const incrementDate = (dateInput, increment)  => {
         const dateFormatTotime = new Date(dateInput);
         const increasedDate = new Date(dateFormatTotime.getTime() + (increment * 86400000));
@@ -44,7 +48,7 @@ const Calendar = (props) => {
 
     return (
         <div className="week-grid">
-            {props.scheduled.length === 0 && <div className="loading-container"><Loading /></div>}
+            {scheduled.length === 0 && <div className="loading-container"><Loading /></div>}
             <div className="date-title">
                 <h3>{months[currWeek[0].getMonth()]}</h3>
                 <h4>{currWeek[0].getFullYear()}</h4>
