@@ -2,7 +2,6 @@ import { useState, useContext, useEffect, useCallback } from "react";
 import SchedulingForm from "./SchedulingForm";
 import { CalendarContext } from "../contexts/CalendarContext";
 import AdminForm from "./AdminForm";
-import { SERVER_PORT } from "../utils/globalVars";
 
 const TimeSlot = (props) => {
 
@@ -22,8 +21,8 @@ const TimeSlot = (props) => {
         DOMAIN //pro admin
     } = useContext(CalendarContext);
     
-    const ADDING_TIMESLOT_PATH = `${DOMAIN}:${SERVER_PORT}/createTimeslot` //pro admin
-    const DELETE_PATH = `${DOMAIN}:${SERVER_PORT}/deleteTimeslot` //pro admin
+    const ADDING_TIMESLOT_PATH = `${DOMAIN}/createTimeslot` //pro admin
+    const DELETE_PATH = `${DOMAIN}/deleteTimeslot` //pro admin
 
     // For an individual user, each timeslot is unique.
     // The sub is added to the id for the db entry, since there will be several users.

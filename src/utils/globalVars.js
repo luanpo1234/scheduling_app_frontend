@@ -1,5 +1,3 @@
-const SERVER_PORT = process.env.REACT_APP_SERVER_PORT;
-
 const weekDays = [
     "dom.",
     "seg.", 
@@ -25,4 +23,4 @@ const months = [
         "dezembro"
         ]
 
-export { weekDays, months, SERVER_PORT }; //
+export { weekDays, months }; //

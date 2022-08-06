@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { useAuth0 } from "@auth0/auth0-react";
-import {SERVER_PORT} from "../utils/globalVars"
 
 const SchedulingForm = (props) => {
 
@@ -16,8 +15,8 @@ const SchedulingForm = (props) => {
         GET_USER_SCHEDULES_PATH
     } = useContext(CalendarContext);
 
-    const POST_USER_SCHEDULE_PATH = `${DOMAIN}:${SERVER_PORT}/createUserSchedule`;
-    const DELETE_USER_SCHEDULE_PATH = `${DOMAIN}:${SERVER_PORT}/deleteUserSchedule`;
+    const POST_USER_SCHEDULE_PATH = `${DOMAIN}/createUserSchedule`;
+    const DELETE_USER_SCHEDULE_PATH = `${DOMAIN}/deleteUserSchedule`;
 
     const { user } = useAuth0();
 

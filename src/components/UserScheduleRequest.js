@@ -1,14 +1,13 @@
 import { useState, useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import Axios from "axios";
-import { SERVER_PORT } from "../utils/globalVars"
 
 const UserScheduleRequest = ({ userData }) => {
     const { setScheduled, getData, GET_USER_SCHEDULES_PATH, DOMAIN } = useContext(CalendarContext);
     const [notes, setNotes] = useState("");
 
     const updateUserRequestStatus = (newStatus) => {
-        Axios.post(`${DOMAIN}:${SERVER_PORT}/updateUserRequestStatus`, 
+        Axios.post(`${DOMAIN}/updateUserRequestStatus`, 
         {params: {_id: userData._id}, update: {status: newStatus, admin_notes: notes}})
         .then(response => console.log(`New user request status: ${newStatus}, _id: ${userData._id}`))
         .then(() => getData(GET_USER_SCHEDULES_PATH));

@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import { SERVER_PORT } from "../utils/globalVars";
 
 const CalendarContext = React.createContext();
 
 const CalendarContextProvider = ({ children }) => {
     const DOMAIN = process.env.REACT_APP_DOMAIN;
 
-    const GET_USER_SCHEDULES_PATH = `${DOMAIN}:${SERVER_PORT}/getUserSchedules`;
-    const GET_TIMESLOTS_PATH = `${DOMAIN}:${SERVER_PORT}/getAvailableTimeslots`;
+    const GET_USER_SCHEDULES_PATH = `${DOMAIN}/getUserSchedules`;
+    const GET_TIMESLOTS_PATH = `${DOMAIN}/getAvailableTimeslots`;
 
     const [availableTimeslots, setAvailableTimeslots] = useState([]);
     const [scheduled, setScheduled] = useState([]);
