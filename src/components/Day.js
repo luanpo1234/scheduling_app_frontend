@@ -7,7 +7,7 @@ const Day = (props) => {
     for (let i=props.dailyTimeRange[0];i<props.dailyTimeRange[1];i++) {
         timeSlots.push(i)
     }
-    //console.log(timeSlots)
+
     return (
         <div className="day-grid">
             <div className="date-title">

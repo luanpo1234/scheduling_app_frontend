@@ -3,7 +3,7 @@ import { CalendarContext } from "../contexts/CalendarContext";
 import Axios from "axios";
 
 const UserScheduleRequest = ({ userData }) => {
-    const { setScheduled, getData, GET_USER_SCHEDULES_PATH, DOMAIN } = useContext(CalendarContext);
+    const { getData, GET_USER_SCHEDULES_PATH, DOMAIN } = useContext(CalendarContext);
     const [notes, setNotes] = useState("");
 
     const updateUserRequestStatus = (newStatus) => {

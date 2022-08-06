@@ -18,9 +18,10 @@ const AdminForm = (props) => {
         };
 
     const getContent = () => {
+        const [ year, month, day, startTime, endTime ] = props.id.split("-");
         return (
             <div>
-                <h3>Pedidos de marcação de horário para o dia {props.dateTime[0]} das {props.dateTime[3][0]} às {props.dateTime[3][1]} horas:</h3>
+                <h3>Pedido de marcação de horário para o dia {day}/{String(Number(month)+1)}/{year} das {startTime} às {endTime} horas</h3>
                 <hr />
                 {
                     props.isVisible && getThisTimeslotUserData().map(userData =>

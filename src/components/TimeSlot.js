@@ -141,7 +141,6 @@ const TimeSlot = (props) => {
                     isVisible={formVisible} 
                     toggleVisibility={toggleForm}
                     calendarType={props.calendarType}
-                    dateTime={[props.date.getDate(), props.date.getMonth(), props.date.getFullYear(), props.timeRange]} 
                 />
                 :
                 <SchedulingForm
@@ -151,7 +150,6 @@ const TimeSlot = (props) => {
                     isVisible={formVisible} 
                     toggleVisibility={toggleForm}
                     calendarType={props.calendarType}
-                    dateTime={[props.date.getDate(), props.date.getMonth(), props.date.getFullYear(), props.timeRange]} 
                 />
             
             }
