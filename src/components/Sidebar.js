@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Loading from "./Loading";
 
 const Sidebar = ({ scheduled }) => {
@@ -7,11 +8,6 @@ const Sidebar = ({ scheduled }) => {
         "accepted" : "marcada",
         "pending" : "pendente",
 
-    }
-
-    const transformDateStr = (dateStr) => {
-        const [ year, month, day, startTime, endTime ] = dateStr.split("-");
-        return `${day}/${String(Number(month)+1)} das ${startTime} às ${endTime}h`
     }
 
     const getColors = (status) => {
@@ -32,19 +28,26 @@ const Sidebar = ({ scheduled }) => {
                 {scheduled.length === 0 ?
                 <div className="loading-container"><Loading /></div> :
                 scheduled.map(item =>
-                    <div style={getColors(item.status)}>
-                        <p>
-                            {item.name}
-                        </p>
-                        <p>
-                            {transformDateStr(item.timeslot)}
-                        </p>
-                        <p>
-                            {item.type} - {statusTextDict[item.status]}
-                        </p>
+                    {
+                    const [ year, month, day, startTime, endTime ] = item.timeslot.split("-");
+                    return (
+                        <Link to={`/${item.type}/${new Date(year, month, day)}`}>
+                            <div style={getColors(item.status)}>
+                                <p>
+                                    {item.name}
+                                </p>
+                                <p>
+                                    {`${day}/${String(Number(month)+1)} das ${startTime} às ${endTime}h`}
+                                </p>
+                                <p>
+                                    {item.type} - {statusTextDict[item.status]}
+                                </p>
 
-                        <hr />
-                    </div>)
+                                <hr />
+                            </div>
+                        </Link>
+                        )
+                    })
             }
             </div>
         </div>

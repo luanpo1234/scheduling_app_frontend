@@ -7,7 +7,7 @@ import Week from "./Week";
 
 const Calendar = (props) => {
     // Não acho ideal pegar isso do params, repense
-    const { calendarType } = useParams();
+    const { calendarType, initialDate } = useParams();
 
     const { scheduled } = useContext(CalendarContext);
     
@@ -30,8 +30,9 @@ const Calendar = (props) => {
         }
         return week;
         }
-
-    const [currWeek, setCurrWeek] = useState(populateWeek())
+    
+    //if not date is set in props, defaults to today 
+    const [currWeek, setCurrWeek] = useState(populateWeek(initialDate))
     
     const changeWeek = (week, operator) => {
         let summand;

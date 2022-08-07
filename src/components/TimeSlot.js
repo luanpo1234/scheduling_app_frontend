@@ -139,7 +139,7 @@ const TimeSlot = (props) => {
                     id={slotId}
                     key={slotId + "admin"}
                     isVisible={formVisible} 
-                    toggleVisibility={toggleForm}
+                    toggleVisibility={() => setFormVisible(prevState => !prevState)}
                     calendarType={props.calendarType}
                 />
                 :
@@ -148,7 +148,7 @@ const TimeSlot = (props) => {
                     key={slotId + "scheduling"}
                     userDataForThisTimeslot={userDataForThisTimeslot}
                     isVisible={formVisible} 
-                    toggleVisibility={toggleForm}
+                    toggleVisibility={() => setFormVisible(prevState => !prevState)}
                     calendarType={props.calendarType}
                 />
             
