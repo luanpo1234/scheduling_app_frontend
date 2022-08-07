@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
+import { sendEmail } from "../utils/emailJS";
 import Axios from "axios";
 
 const UserScheduleRequest = ({ userData }) => {
@@ -13,11 +14,24 @@ const UserScheduleRequest = ({ userData }) => {
         .then(() => getData(GET_USER_SCHEDULES_PATH));
     }
 
-    const handleSubmit = (e)  => {
+    const handleSubmit = (e, willSendEmail=true)  => {
         e.preventDefault();
         //não está atualizando _scheduled_ hora que clica, tem que incluir função "...andUpdate..."
         e.target.name === "accept" && updateUserRequestStatus("accepted");
         e.target.name === "reject" && updateUserRequestStatus("rejected");
+        const statusTextDict = {
+            "reject" : "recusado",
+            "accept" : "aceito"
+        }
+        willSendEmail && sendEmail({
+            timeslot: userData.timeslot,
+            status: statusTextDict[e.target.name],
+            email: userData.email,
+            name: userData.name,
+            notes: notes,
+            url: window.location.href,
+            emailTemplate: "toUser"
+        });
     }
 
     return (

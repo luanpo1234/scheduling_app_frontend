@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { useAuth0 } from "@auth0/auth0-react";
+import { sendEmail } from "../utils/emailJS";
 
 const SchedulingForm = (props) => {
 
@@ -27,7 +28,7 @@ const SchedulingForm = (props) => {
             data.timeslot === props.id) && setFormSent(true);
     }, [props.id, scheduled]);
 
-    const handleSubmit = (e)  => {
+    const handleSubmit = (e, willSendEmail=true)  => {
         e.preventDefault();
         // If the button is clicked after form has been sent, delete entry.
         if (formSent) {
@@ -38,13 +39,22 @@ const SchedulingForm = (props) => {
                 _id: props.id + user.sub,
                 timeslot: props.id,
                 name: user.name,
+                email: user.email,
                 sub: user.sub,
                 user_notes: notes,
                 type: props.calendarType,
                 status: "pending"
             }
             addDataAndGetNewData(POST_USER_SCHEDULE_PATH, GET_USER_SCHEDULES_PATH, newSchedulingData);
+            console.log(window.location)
             setFormSent(true);
+            willSendEmail && sendEmail({
+                timeslot: props.id,
+                name: user.name,
+                url: window.location.href,
+                notes: notes,
+                emailTemplate: "toAdmin"
+            });
         }
     }
 
@@ -61,6 +71,7 @@ const SchedulingForm = (props) => {
                 return(
                     <div>
                         <h3>Aula marcada!</h3>
+                        <p><strong>Obs:</strong> {props.userDataForThisTimeslot.admin_notes}</p>
                     </div>
                 )
             } else if (props.userDataForThisTimeslot.status === "rejected") {
