@@ -1,6 +1,7 @@
 :root {
   --main-green-color: #74b084;  
   --main-grey-color: lightgrey;
+  --form-background-color: #f5f0f0;
 }
 
 body {
@@ -29,6 +30,7 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
 .day-grid {
   width: 10.0vw;
   display: grid;
@@ -116,7 +118,8 @@ header {
 button {
   cursor: pointer;
   border-radius: 5px;
-  width: 25vw;
+  box-shadow: 1.5px 1px gray;
+  width: 10vw;
   max-height: 10vh;
   padding: 1vw 2vw 1vw 2vw;
   margin: 1vw;
@@ -125,6 +128,10 @@ button {
 	font-size: 2.8vh;
   text-transform: uppercase;
   transition: 0.5s;
+}
+
+.calendar-btn {
+  width: 25vw;
 }
 
 .scheduling-form--button {
@@ -139,7 +146,7 @@ button {
 }
 
 .login-btn {
-  width: auto;
+  /* width: auto; */
   background-color: var(--main-grey-color);
 }
 
@@ -163,4 +170,16 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.context-menu {
+  padding: 0vw 0.3vw 0.3vw 0.3vw;
+  border-radius: 5px;
+  box-shadow: 1px 1px gray;
+  position: fixed;
+  background-color: #f5f0f0;
+  border-radius: 5px;
+  box-shadow: 1px 1px gray;
+  margin: auto;
+  z-index: 1;
 }

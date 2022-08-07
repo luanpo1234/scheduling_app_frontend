@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CalendarContext } from "../contexts/CalendarContext";
 import Sidebar from "./Sidebar";
 
-const Home = () => {   //passando do Context pro App aos poucos
+const Home = () => {
     const { getData, user, GET_USER_SCHEDULES_PATH, scheduled } = useContext(CalendarContext);
 
     // Acho que isso seria o caso pra um Hook customizado:
@@ -16,8 +16,8 @@ const Home = () => {   //passando do Context pro App aos poucos
             <div className="home-container">
             { user && <Sidebar scheduled={scheduled} /> }
                 <h1>Aulas com Luiza</h1>
-                <Link to="/online"><button>Agenda online</button></Link>
-                <Link to="/presence"><button>Agenda presencial</button></Link>
+                <Link to="/online"><button class="calendar-btn">Agenda online</button></Link>
+                <Link to="/presence"><button class="calendar-btn">Agenda presencial</button></Link>
             </div>
         </>
     )    
