@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import Week from "./Week";
 
 const Calendar = (props) => {
+    
     // Não acho ideal pegar isso do params, repense
     const { calendarType, initialDate } = useParams();
 
@@ -48,21 +49,23 @@ const Calendar = (props) => {
     }
 
     return (
-        <div className="week-grid">
-            {scheduled.length === 0 && <div className="loading-container"><Loading /></div>}
+        <>
             <div className="date-title">
                 <h3>{months[currWeek[0].getMonth()]}</h3>
                 <h4>{currWeek[0].getFullYear()}</h4>
             </div>
-            <i className="ri-arrow-left-s-line ri-fw ri-5x" onClick={() => changeWeek(currWeek, "-")}></i>
-            <Week 
-                dates={currWeek}
-                dailyTimeRange={props.dailyTimeRange}
-                key={currWeek[0]}
-                calendarType={calendarType}
-            />
-            <i className="ri-arrow-right-s-line ri-fw ri-5x" onClick={() => changeWeek(currWeek, "+")}></i>
-        </div>
+            <div className="week-grid-container">
+                
+                <i className="ri-arrow-left-s-line ri-fw ri-5x" onClick={() => changeWeek(currWeek, "-")}></i>
+                    <Week 
+                        dates={currWeek}
+                        dailyTimeRange={props.dailyTimeRange}
+                        key={currWeek[0]}
+                        calendarType={calendarType}
+                    />
+                <i className="ri-arrow-right-s-line ri-fw ri-5x" onClick={() => changeWeek(currWeek, "+")}></i>
+            </div>
+        </>
     )    
 }
 

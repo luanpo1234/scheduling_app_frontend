@@ -2,7 +2,7 @@ import Day from "./Day";
 
 const Week = (props) => {
     return (
-        <>
+        <div className="week-grid">
             {props.dates.map((currDate, index) =>
                 <Day
                     date={currDate}
@@ -11,7 +11,7 @@ const Week = (props) => {
                     key={index}
                 />
             )}
-        </>
+        </div>
     )    
 }
 

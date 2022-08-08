@@ -98,9 +98,19 @@ const TimeSlot = (props) => {
         // pro admin --------
     }
 
-    const toggleForm = () => {
+    const toggleForm = (e) => {
         const isAvailable = getMatch(availableTimeslots);
         if (isAdmin){
+            // e is only passed on onContextMenu
+            // Acho melhor adaptar o SchedulingForm, menos trabalho
+            /* if (e.type === "contextmenu") {
+                e.preventDefault();
+                setContextMenu(
+                    <div className="context-menu" style={{top: e.clientY, left: e.clientX}}>
+                        <h4>Marcar aula para:</h4>
+                    </div>
+                )
+            } */
             if (isWrongCalendarType) {
                 console.log("Wrong calendar type!")
             } else if (!isAvailable) {
@@ -126,7 +136,10 @@ const TimeSlot = (props) => {
             <div 
                 className="time-slot"
                 style={getColors()}
-                onClick={toggleForm}>
+                onClick={toggleForm}
+                //add client adding logic for admin in onContextMenu
+                onContextMenu={(e) => toggleForm(e)}
+                >
                 <p>{props.timeRange[0]}:00</p>
                 {scheduled.filter(data =>   //filter relevante só pro admin, se tiver mais de um ele põe o ícone de mais
                     data.timeslot === slotId && data.type === props.calendarType).length > 1 && 

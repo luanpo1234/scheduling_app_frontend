@@ -24,7 +24,7 @@ a, a:hover, a:focus, a:active {
 }
 
 header {
-  margin: 2vw 5vw 10vw 5vw;
+  margin: 2vw 5vw 4vw 5vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -39,9 +39,16 @@ header {
   padding: 0.25vw; */
 }
 
-.week-grid {
+.week-grid-container {
   margin-left: 5vw;
-  width: 15.0vw;
+  display: flex;
+  width: 90%;
+  /* gap: 0.5vw;
+  padding: 0.25vw; */
+}
+
+.week-grid {
+  margin: auto;
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(1fr);
@@ -188,9 +195,12 @@ button {
 }
 
 @media (max-width: 580px) {
-  
   h1 {
     font-size: 6vw;
     text-align: center;
+  }
+
+  .week-grid-container {
+    width: 100%;
   }
 }

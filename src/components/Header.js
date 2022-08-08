@@ -12,7 +12,7 @@ const Header = () => {
     return (
         <header>
             <div>
-                <p>-</p> {/* Gambiarra temporária depois cria um <nav>, etc. */}
+                <p style={{color: "white"}}>-</p> {/* Gambiarra temporária depois cria um <nav>, etc. */}
                 <Link to="/"><button>Home</button></Link>
             </div>
             {

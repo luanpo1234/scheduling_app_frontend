@@ -46,7 +46,6 @@ const SchedulingForm = (props) => {
                 status: "pending"
             }
             addDataAndGetNewData(POST_USER_SCHEDULE_PATH, GET_USER_SCHEDULES_PATH, newSchedulingData);
-            console.log(window.location)
             setFormSent(true);
             willSendEmail && sendEmail({
                 timeslot: props.id,
@@ -88,15 +87,17 @@ const SchedulingForm = (props) => {
             return (
                 <form onSubmit={handleSubmit}>
                     <h3>Pedido de marcação de horário para o dia {day}/{String(Number(month)+1)}/{year} das {startTime} às {endTime} horas</h3>
-                    <label htmlFor="text">Observações: </label>
-                    <textarea
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                    />
-                    <button className="scheduling-form--button" type="submit" onClick={handleSubmit}>Enviar</button>
+                    <div>
+                        <label htmlFor="text">Observações: </label>
+                        <textarea
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                        />
+                        <button className="scheduling-form--button" type="submit" onClick={handleSubmit}>Enviar</button>
+                    </div>
                 </form>
             )
         }
