@@ -16,8 +16,8 @@ const Home = () => {
             <div className="home-container">
             { user && <Sidebar scheduled={scheduled} /> }
                 <div className="home-container--btns">
-                    <Link to="/online"><button class="calendar-btn">Agenda online</button></Link>
-                    <Link to="/presence"><button class="calendar-btn">Agenda presencial</button></Link>
+                    <Link to="/online"><button className="calendar-btn">Agenda online</button></Link>
+                    <Link to="/presence"><button className="calendar-btn">Agenda presencial</button></Link>
                 </div>
             </div>
         </>

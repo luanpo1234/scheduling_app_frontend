@@ -2,6 +2,7 @@ import { months } from "../utils/globalVars";
 import { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { CalendarContext } from "../contexts/CalendarContext";
+import { useSwipeable } from "react-swipeable";
 import Loading from "./Loading";
 import Week from "./Week";
 
@@ -48,14 +49,22 @@ const Calendar = (props) => {
         setCurrWeek(populateWeek(newDate));
     }
 
+    const handlers = useSwipeable({
+        onSwipedLeft: () => changeWeek(currWeek, "-"),
+        onSwipedRight: () => changeWeek(currWeek, "+"),
+        swipeDuration: 500,
+        preventScrollOnSwipe: true,
+        trackMouse: true
+      });
+
     return (
         <>
             <div className="date-title">
                 <h3>{months[currWeek[0].getMonth()]}</h3>
                 <h4>{currWeek[0].getFullYear()}</h4>
             </div>
-            <div className="week-grid-container">
-                
+            <div className="week-grid-container" {...handlers}>
+                {scheduled.length === 0 && <div className="loading-container"><Loading /></div>}
                 <i className="ri-arrow-left-s-line ri-fw ri-5x" onClick={() => changeWeek(currWeek, "-")}></i>
                     <Week 
                         dates={currWeek}

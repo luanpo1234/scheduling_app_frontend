@@ -24,19 +24,21 @@ a, a:hover, a:focus, a:active {
 }
 
 header {
-  margin: 2vw 5vw 4vw 5vw;
+  margin: 2vw 5vw 1.5vw 5vw;
+  padding-bottom: 2vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid var(--main-grey-color);
 }
 
 .day-grid {
   width: 10.0vw;
   display: grid;
   grid-template-columns: repeat(1fr);
-  /* gap: 0.5vw;
-  padding: 0.25vw; */
+  margin: 0;
+  padding: 0;
 }
 
 .week-grid-container {
@@ -52,8 +54,8 @@ header {
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(1fr);
-  /* gap: 0.5vw;
-  padding: 0.25vw; */
+  gap: 0;
+  /* padding: 0.25vw; */
 }
 
 .time-slot {
@@ -201,6 +203,22 @@ button {
   }
 
   .week-grid-container {
+    flex-direction: column;
+  }
+  
+  .ri-arrow-left-s-line{
+    display: none;
+  }
+
+  .ri-arrow-right-s-line{
+    display: none;
+  }
+
+  .week-grid {
     width: 100%;
+  }
+
+  .day-grid {
+    width: auto;
   }
 }
