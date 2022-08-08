@@ -23,11 +23,6 @@ a, a:hover, a:focus, a:active {
   color: inherit;
 }
 
-h1 {
-  font-size: 6vw;
-  text-align: center;
-}
-
 header {
   margin: 2vw 5vw 10vw 5vw;
   display: flex;
@@ -192,5 +187,10 @@ button {
   z-index: 1;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 580px) {
+  
+  h1 {
+    font-size: 6vw;
+    text-align: center;
+  }
 }
