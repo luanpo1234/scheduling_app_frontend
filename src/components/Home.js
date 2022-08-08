@@ -15,9 +15,10 @@ const Home = () => {
         <>
             <div className="home-container">
             { user && <Sidebar scheduled={scheduled} /> }
-                <h1>Aulas com Luiza</h1>
-                <Link to="/online"><button class="calendar-btn">Agenda online</button></Link>
-                <Link to="/presence"><button class="calendar-btn">Agenda presencial</button></Link>
+                <div className="home-container--btns">
+                    <Link to="/online"><button class="calendar-btn">Agenda online</button></Link>
+                    <Link to="/presence"><button class="calendar-btn">Agenda presencial</button></Link>
+                </div>
             </div>
         </>
     )    

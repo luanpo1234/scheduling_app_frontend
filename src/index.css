@@ -24,7 +24,7 @@ a, a:hover, a:focus, a:active {
 }
 
 header {
-  margin: auto 5vw auto 5vw;
+  margin: 2vw 5vw 10vw 5vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -96,17 +96,19 @@ header {
 .profile-container {
   display: flex;
   align-items: center;
-  margin: 2vw;
+  font-size: 15px;
 }
 
 .profile-container img {
-  height: 8vh;
+  height: 6vh;
   margin-right: 1vw;
 }
 
 .home-container {
-  margin: auto;
-  padding-top: 15vw;
+  display: flex;
+  align-items: center;
+  margin: 3vw auto;
+  height: 30vw;
   text-align: center;
   position: fixed;
   top: 50%;
@@ -155,8 +157,8 @@ button {
   position: fixed;
   overflow-y: scroll;
   height: 100%;
-  width: 50%;
-  left: -18%;
+  width: 35%;
+  left: -22%;
   top: 20%;
   bottom: 50%;
   transform: translate(-50%, 0);

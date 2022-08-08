@@ -11,22 +11,28 @@ const Header = () => {
 
     return (
         <header>
+            <div>
+                <p>-</p> {/* Gambiarra temporária depois cria um <nav>, etc. */}
                 <Link to="/"><button>Home</button></Link>
-                {
-                    isAuthenticated ?
-                    <>
-                        <div>
-                            <Profile />
-                        </div>
-                        <div>
-                            <LogoutButton />
-                        </div>
-                    </> 
-                    :
+            </div>
+            {
+                isAuthenticated ?
+                <>
+                    <h1>Aulas com Luiza</h1>
                     <div>
+                        <Profile />
+                        <LogoutButton />
+                    </div>
+                </> 
+                :
+                <>
+                    <h1>Aulas com Luiza</h1>
+                    <div>
+                        <p>-</p>
                         <LoginButton />
                     </div>
-                }
+                </>
+            }
         </header>
     )    
 }
