@@ -173,6 +173,7 @@ button {
   text-align: center;
   position: fixed;
   overflow-y: scroll;
+  background-color: white;
   box-shadow: 1px 1px gray;
   height: 30vw;
   width: 25vw;
