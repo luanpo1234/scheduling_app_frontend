@@ -12,15 +12,15 @@ const Home = () => {
     }, []);
 
     return (
-        <>
-            <div className="home-container">
+        <div className="home-container">
             { user && <Sidebar scheduled={scheduled} /> }
-                <div className="home-container--btns">
+            <div className="main-btns-container">
+                <div>
                     <Link to="/online"><button className="calendar-btn">Agenda online</button></Link>
                     <Link to="/presence"><button className="calendar-btn">Agenda presencial</button></Link>
                 </div>
             </div>
-        </>
+        </div>
     )    
 }
 

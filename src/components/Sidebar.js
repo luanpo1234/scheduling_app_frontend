@@ -12,11 +12,11 @@ const Sidebar = ({ scheduled }) => {
 
     const getColors = (status) => {
         if (status === "pending") {
-            return { backgroundColor: "yellow" };
+            return { backgroundColor: "#ded476" };
         } else if (status === "rejected") {
             return { backgroundColor: "lightgrey" };
         } else if (status === "accepted") {
-            return { backgroundColor: "green" };
+            return { backgroundColor: "#569c83" };
         }
     }
 
@@ -31,7 +31,7 @@ const Sidebar = ({ scheduled }) => {
                     {
                     const [ year, month, day, startTime, endTime ] = item.timeslot.split("-");
                     return (
-                        <Link to={`/${item.type}/${new Date(year, month, day)}`}>
+                        <Link to={`/${item.type}/${new Date(year, month, day)}`} >
                             <div style={getColors(item.status)}>
                                 <p>
                                     {item.name}

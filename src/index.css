@@ -33,6 +33,12 @@ header {
   border-bottom: 1px solid var(--main-grey-color);
 }
 
+.home-container{
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
 .day-grid {
   width: 10.0vw;
   display: grid;
@@ -113,16 +119,16 @@ header {
   margin-right: 1vw;
 }
 
-.home-container {
+.main-btns-container {
   display: flex;
   align-items: center;
   margin: 3vw auto;
   height: 30vw;
   text-align: center;
-  position: fixed;
+/*   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   width: 50%;
 }
 
@@ -164,15 +170,19 @@ button {
 
 /* TODO: Arruma depois */
 .sidenav {
+  text-align: center;
   position: fixed;
   overflow-y: scroll;
-  height: 100%;
-  width: 35%;
-  left: -22%;
+  box-shadow: 1px 1px gray;
+  height: 30vw;
+  width: 25vw;
+  left: 0;
+  bottom: 0;
+/*   left: -22%;
   top: 20%;
   bottom: 50%;
-  transform: translate(-50%, 0);
-  border: 1px solid black;
+  transform: translate(-50%, 0); */
+  border: 1px solid var(--main-grey-color);
 }
 
 .loading-container {
@@ -202,6 +212,11 @@ button {
     text-align: center;
   }
 
+  /*Invertido aqui por algum motivo bizarro*/
+  header {
+    flex-direction: column;
+  }
+
   .week-grid-container {
     flex-direction: column;
   }
@@ -216,6 +231,24 @@ button {
 
   .week-grid {
     width: 100%;
+  }
+
+  .home-container {
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+  }
+
+  .sidenav {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    overflow-y: auto;
+  }
+
+  .main-btns-container {
+    margin-top: 7vh;
+    margin-bottom: 7vh;
+    position: relative;
   }
 
   .day-grid {

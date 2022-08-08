@@ -11,7 +11,7 @@ const Header = () => {
 
     return (
         <header>
-            <div>
+            <div className="">
                 <p style={{color: "white"}}>-</p> {/* Gambiarra temporária depois cria um <nav>, etc. */}
                 <Link to="/"><button>Home</button></Link>
             </div>
@@ -28,7 +28,7 @@ const Header = () => {
                 <>
                     <h1>Aulas com Luiza</h1>
                     <div>
-                        <p>-</p>
+                        <p style={{color: "white"}}>-</p>
                         <LoginButton />
                     </div>
                 </>
