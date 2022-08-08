@@ -38,8 +38,10 @@ const TimeSlot = (props) => {
     // Check if timeslot matches availableTimeslots or scheduled contexts
     const getMatch = useCallback((context) => ( context.find(data =>
         data.timeslot === slotId && data.type === props.calendarType
+        // Admin doesn't see rejected user
+        && !(isAdmin && data.status === "rejected") //como o isAvailable tb roda aqui e não tem "status" pode dar pau!
         ) 
-    ), [props.calendarType, slotId]);
+    ), [props.calendarType, slotId, isAdmin]);
 
     // Era bom unir esse função com a de cima, mas hardcoded por enquanto:
     const checkIsWrongCalendarType = useCallback((context) => ( context.some(data =>
@@ -120,6 +122,7 @@ const TimeSlot = (props) => {
                     type: props.calendarType
                 }
                 addDataAndGetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
+            // Admin clicks on empty available slot to make it unavailable
             } else if (isAvailable && !isBooked) {
                 deleteDataAndGetNewData(DELETE_PATH, GET_TIMESLOTS_PATH, {_id: slotId});
                 return ""   //gambiarra pra não rodar a próxima linha nesse caso
@@ -141,10 +144,13 @@ const TimeSlot = (props) => {
                 onContextMenu={(e) => toggleForm(e)}
                 >
                 <p>{props.timeRange[0]}:00</p>
-                {scheduled.filter(data =>   //filter relevante só pro admin, se tiver mais de um ele põe o ícone de mais
-                    data.timeslot === slotId && data.type === props.calendarType).length > 1 && 
+                {scheduled.filter(data =>   //filter only relevant for admin, if there is more than one user, set + symbol
+                    //Virou meio bagunça essa coisa do !(isAdmin), cuidado
+                    !(isAdmin && data.status === "rejected") && data.timeslot === slotId && data.type === props.calendarType).length > 1 && 
                     <i className="ri-add-line ri-fw ri-2x"></i>}
-                    <p>{userDataForThisTimeslot && userDataForThisTimeslot.name}</p>
+                    <p>{userDataForThisTimeslot && 
+                        ! (isAdmin && userDataForThisTimeslot.status === "rejected") &&
+                        userDataForThisTimeslot.name}</p>
             </div>
             {
                 isAdmin ?

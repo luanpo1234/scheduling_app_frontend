@@ -14,7 +14,7 @@ const UserScheduleRequest = ({ userData }) => {
         .then(() => getData(GET_USER_SCHEDULES_PATH));
     }
 
-    const handleSubmit = (e, willSendEmail=true)  => {
+    const handleSubmit = (e, willSendEmail=false)  => {
         e.preventDefault();
         //não está atualizando _scheduled_ hora que clica, tem que incluir função "...andUpdate..."
         e.target.name === "accept" && updateUserRequestStatus("accepted");

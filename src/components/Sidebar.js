@@ -31,7 +31,7 @@ const Sidebar = ({ scheduled }) => {
                     {
                     const [ year, month, day, startTime, endTime ] = item.timeslot.split("-");
                     return (
-                        <Link to={`/${item.type}/${new Date(year, month, day)}`} >
+                        <Link to={`/${item.type}/${new Date(year, month, day)}`} key={item.id} >
                             <div style={getColors(item.status)}>
                                 <p>
                                     {item.name}

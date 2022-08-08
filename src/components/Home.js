@@ -9,7 +9,7 @@ const Home = () => {
     // Acho que isso seria o caso pra um Hook customizado:
     useEffect(() => {
         getData(GET_USER_SCHEDULES_PATH);
-    }, []);
+    }, [GET_USER_SCHEDULES_PATH, getData]);
 
     return (
         <div className="home-container">

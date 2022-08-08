@@ -21,7 +21,7 @@ const CalendarContextProvider = ({ children }) => {
         if(user) {
         setIsAdmin(user.sub===ADMIN_SUB)
     }
-    }, [user])
+    }, [user, ADMIN_SUB])
 
     const deleteDataAndGetNewData = (postPath, getPath, parameters) => {
         Axios.delete(postPath, { params: parameters })
@@ -53,16 +53,16 @@ const CalendarContextProvider = ({ children }) => {
             Axios.get(path, { params: parameters })
             .then(response => {setterFunc(response.data)})
             .catch(error => alert("Erro de conexão: não foi possível obter os dados do calendário."))
-    }}, [isAdmin, user]);
+    }}, [isAdmin, user, GET_USER_SCHEDULES_PATH, GET_TIMESLOTS_PATH]);
 
     useEffect(() => {      
         getData(GET_USER_SCHEDULES_PATH);
-    }, [user, getData]);
+    }, [user, getData, GET_USER_SCHEDULES_PATH]);
 
     useEffect(() => {        
         user && Axios.get(GET_TIMESLOTS_PATH).then(response => {
             setAvailableTimeslots(response.data)});
-    }, [user]);
+    }, [user, GET_TIMESLOTS_PATH]);
 
     return (
         <CalendarContext.Provider value={ 
