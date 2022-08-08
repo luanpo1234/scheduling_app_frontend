@@ -13,7 +13,7 @@ const sendEmail = (data) => {
    const emailData = {
       name: data.name,
       day: day,
-      month: month,
+      month: String(Number(month)+1),
       year: year,
       timeslotStart: startTime,
       timeslotEnd: endTime,
