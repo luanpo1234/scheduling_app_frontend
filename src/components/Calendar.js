@@ -50,8 +50,8 @@ const Calendar = (props) => {
     }
 
     const handlers = useSwipeable({
-        onSwipedLeft: () => changeWeek(currWeek, "-"),
-        onSwipedRight: () => changeWeek(currWeek, "+"),
+        onSwipedLeft: () => changeWeek(currWeek, "+"),
+        onSwipedRight: () => changeWeek(currWeek, "-"),
         swipeDuration: 500,
         preventScrollOnSwipe: true,
         trackMouse: true
