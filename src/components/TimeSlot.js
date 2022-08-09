@@ -10,7 +10,7 @@ const TimeSlot = (props) => {
     const [isBooked, setIsBooked] = useState(false);
     const [isAvailable, setIsAvailable] = useState(false);
     const [isWrongCalendarType, setIsWrongCalendarType] = useState(false);
-    //const [contextMenu, setContextMenu] = useState("");
+    const [willDefineUser, setWillDefineUser] = useState(false);
 
     const { 
         availableTimeslots, //pro admin (acho)
@@ -116,21 +116,13 @@ const TimeSlot = (props) => {
     const toggleForm = (e) => {
         const isAvailable = getMatch(availableTimeslots);
         if (isAdmin){
-            // e is only passed on onContextMenu
-            // ContextMenu com um dropdown pra selecionar usuários,
-            // puxa os dados do usuário selecionado na DB nova,
-            // chama a função interna do handleSubmit do UserSchedule com esses dados
-            /* if (e.type === "contextmenu") {
-                e.preventDefault();
-                setContextMenu(
-                    <div className="context-menu" style={{top: e.clientY, left: e.clientX}}>
-                        <h4>Marcar aula para:</h4>
-                    </div>
-                )
-                return "" // Not to run rest of code 
-            } */
             if (isWrongCalendarType) {
                 console.log("Wrong calendar type!")
+            } else if (e.type === "contextmenu") {
+                e.preventDefault();
+                setWillDefineUser(true);
+                setFormVisible(prevState => !prevState);
+                return ""   // Stop running code here
             } else if (!isAvailable && !isBooked) {
                 makeThisTimeslotAvailable();
             // Admin clicks on empty available slot to make it unavailable
@@ -162,17 +154,18 @@ const TimeSlot = (props) => {
                     <p>{userDataForThisTimeslot && 
                         ! (isAdmin && userDataForThisTimeslot.status === "rejected") &&
                         userDataForThisTimeslot.name}</p>
-                    {/*contextMenu*/}
             </div>
             {
                 isAdmin ?
                 <AdminForm
                     id={slotId}
                     key={slotId + "admin"}
-                    isVisible={formVisible} 
-                    toggleVisibility={() => setFormVisible(prevState => !prevState)}
+                    isVisible={formVisible}
                     calendarType={props.calendarType}
+                    toggleVisibility={() => setFormVisible(prevState => !prevState)}
                     makeThisTimeslotUnavailable={makeThisTimeslotUnavailable}
+                    willDefineUser={willDefineUser}
+                    setWillDefineUserFalse={() => setWillDefineUser(false)}
                 />
                 :
                 <SchedulingForm

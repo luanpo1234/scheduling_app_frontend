@@ -4,12 +4,12 @@ import { CalendarContext } from "../contexts/CalendarContext";
 import Sidebar from "./Sidebar";
 
 const Home = () => {
-    const { getData, user, GET_USER_SCHEDULES_PATH, scheduled } = useContext(CalendarContext);
+    const { getAndSetDBData, user, GET_USER_SCHEDULES_PATH, scheduled } = useContext(CalendarContext);
 
     // Acho que isso seria o caso pra um Hook customizado:
     useEffect(() => {
-        getData(GET_USER_SCHEDULES_PATH);
-    }, [GET_USER_SCHEDULES_PATH, getData]);
+        getAndSetDBData(GET_USER_SCHEDULES_PATH);
+    }, [GET_USER_SCHEDULES_PATH, getAndSetDBData]);
 
     return (
         <div className="home-container">

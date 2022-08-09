@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CalendarContext } from "../contexts/CalendarContext";
 import Loading from "./Loading";
 
 const Sidebar = ({ scheduled }) => {
 
+    const { isAdmin } = useContext(CalendarContext);
     const statusTextDict = {
         "rejected" : "recusada",
         "accepted" : "marcada",
@@ -30,23 +33,31 @@ const Sidebar = ({ scheduled }) => {
                 scheduled.map(item =>
                     {
                     const [ year, month, day, startTime, endTime ] = item.timeslot.split("-");
-                    return (
-                        <Link to={`/${item.type}/${new Date(year, month, day)}`} key={item.id} >
-                            <div style={getColors(item.status)}>
-                                <p>
-                                    {item.name}
-                                </p>
-                                <p>
-                                    {`${day}/${String(Number(month)+1)} das ${startTime} às ${endTime}h`}
-                                </p>
-                                <p>
-                                    {item.type} - {statusTextDict[item.status]}
-                                </p>
+                    const thisDate = new Date(year, month, day);
+                    console.log(thisDate)
+                    // Admin doesn't see rejected requests
+                    if ( !(isAdmin && item.status === "rejected") &&
+                    (thisDate >= new Date()) ){
+                        return (
+                            <Link to={`/${item.type}/${thisDate}`} key={item.id} >
+                                <div style={getColors(item.status)}>
+                                    <p>
+                                        {item.name}
+                                    </p>
+                                    <p>
+                                        {`${day}/${String(Number(month)+1)} das ${startTime} às ${endTime}h`}
+                                    </p>
+                                    <p>
+                                        {item.type} - {statusTextDict[item.status]}
+                                    </p>
 
-                                <hr />
-                            </div>
-                        </Link>
-                        )
+                                    <hr />
+                                </div>
+                            </Link>
+                            )
+                        }
+                        // If conditions aren't met,
+                        return null;
                     })
             }
             </div>

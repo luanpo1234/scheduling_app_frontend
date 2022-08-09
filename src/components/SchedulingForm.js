@@ -13,10 +13,10 @@ const SchedulingForm = (props) => {
         deleteDataAndGetNewData,
         addDataAndGetNewData,
         DOMAIN,
-        GET_USER_SCHEDULES_PATH
+        GET_USER_SCHEDULES_PATH,
+        POST_USER_SCHEDULE_PATH
     } = useContext(CalendarContext);
 
-    const POST_USER_SCHEDULE_PATH = `${DOMAIN}/createUserSchedule`;
     const DELETE_USER_SCHEDULE_PATH = `${DOMAIN}/deleteUserSchedule`;
 
     const { user } = useAuth0();
