@@ -28,7 +28,7 @@ const SchedulingForm = (props) => {
             data.timeslot === props.id) && setFormSent(true);
     }, [props.id, scheduled]);
 
-    const handleSubmit = (e, willSendEmail=false)  => {
+    const handleSubmit = (e, willSendEmail=true)  => {
         e.preventDefault();
         // If the button is clicked after form has been sent, delete entry.
         if (formSent) {

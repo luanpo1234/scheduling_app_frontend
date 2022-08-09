@@ -26,7 +26,7 @@ const UserScheduleRequest = (props) => {
         props.makeThisTimeslotUnavailable();
     }
 
-    const updateUserRequestAndSendEmail = (statusChange, userData, willSendEmail=false) => {
+    const updateUserRequestAndSendEmail = (statusChange, userData, willSendEmail=true) => {
         statusChange === "accept" && updateUserRequestStatus("accepted");
         statusChange === "acceptAndMakeUnavailable" && updateUserRequestStatusAndMakeTimeslotUnavailable("accepted");
         statusChange === "reject" && updateUserRequestStatus("rejected");
