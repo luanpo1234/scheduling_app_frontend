@@ -254,7 +254,7 @@ button {
 
   .admin-form--container, .scheduling-form--container {
     width: 100%;
-    height: 100%;
+    height: fit-content;
   }
 
   .day-grid {
