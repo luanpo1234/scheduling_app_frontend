@@ -252,6 +252,12 @@ button {
     position: relative;
   }
 
+  .admin-form--container, .scheduling-form--container {
+    width: 100%;
+    bottom: 0;
+    height: fit-content;
+  }
+
   .day-grid {
     width: auto;
   }
