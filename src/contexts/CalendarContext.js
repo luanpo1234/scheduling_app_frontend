@@ -23,7 +23,7 @@ const CalendarContextProvider = ({ children }) => {
     //Gambiarra para simular admin
     useEffect(() => {
         if(user) {
-        setIsAdmin(user.sub===ADMIN_SUB)
+        setIsAdmin(user.sub===ADMIN_SUB || user.sub==="auth0|62eb4a01cbda78b1d43dea1b")
     }
     }, [user, ADMIN_SUB])
 
