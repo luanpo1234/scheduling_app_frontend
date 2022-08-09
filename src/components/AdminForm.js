@@ -26,7 +26,11 @@ const AdminForm = (props) => {
                 {
                     props.isVisible && getThisTimeslotUserData().map(userData =>
                         //Admin doesn't see rejected users
-                        userData.status !== "rejected" && <UserScheduleRequest userData={userData} key={userData.sub} />)
+                        userData.status !== "rejected" && 
+                        <UserScheduleRequest 
+                            makeThisTimeslotUnavailable={props.makeThisTimeslotUnavailable}
+                            userData={userData} 
+                            key={userData.sub} />)
                 }
 
             </div>

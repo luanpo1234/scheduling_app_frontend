@@ -3,7 +3,7 @@ import { CalendarContext } from "../contexts/CalendarContext";
 import { sendEmail } from "../utils/emailJS";
 import Axios from "axios";
 
-const UserScheduleRequest = ({ userData }) => {
+const UserScheduleRequest = ({ userData, makeThisTimeslotUnavailable }) => {
     const { getData, GET_USER_SCHEDULES_PATH, DOMAIN } = useContext(CalendarContext);
     const [notes, setNotes] = useState("");
 
@@ -14,10 +14,15 @@ const UserScheduleRequest = ({ userData }) => {
         .then(() => getData(GET_USER_SCHEDULES_PATH));
     }
 
-    const handleSubmit = (e, willSendEmail=false)  => {
+    const updateUserRequestStatusAndMakeTimeslotUnavailable = (newStatus) => {
+        updateUserRequestStatus(newStatus);
+        makeThisTimeslotUnavailable();
+    }
+
+    const handleSubmit = (e, willSendEmail=true)  => {
         e.preventDefault();
-        //não está atualizando _scheduled_ hora que clica, tem que incluir função "...andUpdate..."
         e.target.name === "accept" && updateUserRequestStatus("accepted");
+        e.target.name === "acceptAndMakeUnavailable" && updateUserRequestStatusAndMakeTimeslotUnavailable("accepted");
         e.target.name === "reject" && updateUserRequestStatus("rejected");
         const statusTextDict = {
             "reject" : "recusado",
@@ -40,7 +45,8 @@ const UserScheduleRequest = ({ userData }) => {
             { userData.status === "accepted" && <h4>Aula marcada!</h4> }
             { userData.status === "rejected" && <h4>Pedido recusado!</h4> }
             <p><strong>Obs. do aluno:</strong> {userData.user_notes}</p>
-            <button className="scheduling-form--button" name="accept" type="submit" onClick={handleSubmit}>Aceitar</button>
+            <button className="scheduling-form--button" name="accept" type="submit" onClick={handleSubmit}>Aceitar e deixar aberto</button>
+            <button className="scheduling-form--button" name="acceptAndMakeUnavailable" type="submit" onClick={handleSubmit}>Aceitar e fechar horário</button>
             <button className="scheduling-form--button" name="reject" type="submit" onClick={handleSubmit}>Recusar</button>
             <label htmlFor="text">Motivo: </label>
                 <textarea

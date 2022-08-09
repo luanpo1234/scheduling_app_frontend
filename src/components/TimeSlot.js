@@ -10,7 +10,8 @@ const TimeSlot = (props) => {
     const [isBooked, setIsBooked] = useState(false);
     const [isAvailable, setIsAvailable] = useState(false);
     const [isWrongCalendarType, setIsWrongCalendarType] = useState(false);
-    
+    //const [contextMenu, setContextMenu] = useState("");
+
     const { 
         availableTimeslots, //pro admin (acho)
         addDataAndGetNewData,
@@ -34,7 +35,19 @@ const TimeSlot = (props) => {
         String(props.timeRange[1]
         );
 
+    const makeThisTimeslotAvailable = () => {
+        const newTimeslot = {
+            _id: slotId,
+            timeslot: slotId,
+            type: props.calendarType
+        }
+        addDataAndGetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
+    };
 
+    const makeThisTimeslotUnavailable = () => {
+        deleteDataAndGetNewData(DELETE_PATH, GET_TIMESLOTS_PATH, {_id: slotId})
+    };
+    
     // Check if timeslot matches availableTimeslots or scheduled contexts
     const getMatch = useCallback((context) => ( context.find(data =>
         data.timeslot === slotId && data.type === props.calendarType
@@ -104,7 +117,9 @@ const TimeSlot = (props) => {
         const isAvailable = getMatch(availableTimeslots);
         if (isAdmin){
             // e is only passed on onContextMenu
-            // Acho melhor adaptar o SchedulingForm, menos trabalho
+            // ContextMenu com um dropdown pra selecionar usuários,
+            // puxa os dados do usuário selecionado na DB nova,
+            // chama a função interna do handleSubmit do UserSchedule com esses dados
             /* if (e.type === "contextmenu") {
                 e.preventDefault();
                 setContextMenu(
@@ -112,22 +127,18 @@ const TimeSlot = (props) => {
                         <h4>Marcar aula para:</h4>
                     </div>
                 )
+                return "" // Not to run rest of code 
             } */
             if (isWrongCalendarType) {
                 console.log("Wrong calendar type!")
-            } else if (!isAvailable) {
-                    const newTimeslot = {
-                    _id: slotId,
-                    timeslot: slotId,
-                    type: props.calendarType
-                }
-                addDataAndGetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
+            } else if (!isAvailable && !isBooked) {
+                makeThisTimeslotAvailable();
             // Admin clicks on empty available slot to make it unavailable
             } else if (isAvailable && !isBooked) {
-                deleteDataAndGetNewData(DELETE_PATH, GET_TIMESLOTS_PATH, {_id: slotId});
+                makeThisTimeslotUnavailable();
                 return ""   //gambiarra pra não rodar a próxima linha nesse caso
             }
-        } if (isAvailable && !isWrongCalendarType) { //&& !isWrongCalendarType só pro admin
+        } if ( (isAvailable || isBooked) && !isWrongCalendarType) { //&& !isWrongCalendarType só pro admin
             setFormVisible(prevState => !prevState);
         };
     };
@@ -151,6 +162,7 @@ const TimeSlot = (props) => {
                     <p>{userDataForThisTimeslot && 
                         ! (isAdmin && userDataForThisTimeslot.status === "rejected") &&
                         userDataForThisTimeslot.name}</p>
+                    {/*contextMenu*/}
             </div>
             {
                 isAdmin ?
@@ -160,6 +172,7 @@ const TimeSlot = (props) => {
                     isVisible={formVisible} 
                     toggleVisibility={() => setFormVisible(prevState => !prevState)}
                     calendarType={props.calendarType}
+                    makeThisTimeslotUnavailable={makeThisTimeslotUnavailable}
                 />
                 :
                 <SchedulingForm
