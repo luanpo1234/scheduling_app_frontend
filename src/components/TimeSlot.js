@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import SchedulingForm from "./SchedulingForm";
 import { CalendarContext } from "../contexts/CalendarContext";
+import useTimeConversion from "../hooks/useTimeConversion";
 import AdminForm from "./AdminForm";
 
 const TimeSlot = (props) => {
@@ -11,6 +12,7 @@ const TimeSlot = (props) => {
     const [isAvailable, setIsAvailable] = useState(false);
     const [isWrongCalendarType, setIsWrongCalendarType] = useState(false);
     const [willDefineUser, setWillDefineUser] = useState(false);
+    const { convertFromBrazilTime, convertToDateObj } = useTimeConversion();
 
     const { 
         availableTimeslots, //pro admin (acho)
@@ -34,19 +36,9 @@ const TimeSlot = (props) => {
         String(props.timeRange[0]) + "-" +
         String(props.timeRange[1]
         );
-
-    const makeThisTimeslotAvailable = () => {
-        const newTimeslot = {
-            _id: slotId,
-            timeslot: slotId,
-            type: props.calendarType
-        }
-        addDataAndSetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
-    };
-
-    const makeThisTimeslotUnavailable = () => {
-        deleteDataAndGetNewData(DELETE_PATH, GET_TIMESLOTS_PATH, {_id: slotId})
-    };
+    
+    // Logo depois de desmontar a data, vc está recriando o objeto aqui, só que com a hora. Melhora isso.
+    const dateObjInLocalTime = convertFromBrazilTime(convertToDateObj(slotId));
     
     // Check if timeslot matches availableTimeslots or scheduled contexts
     const getMatch = useCallback((context) => ( context.find(data =>
@@ -55,6 +47,21 @@ const TimeSlot = (props) => {
         && !(isAdmin && data.status === "rejected") //como o isAvailable tb roda aqui e não tem "status" pode dar pau!
         ) 
     ), [props.calendarType, slotId, isAdmin]);
+
+    const makeThisTimeslotAvailable = () => {
+        const newTimeslot = {
+            _id: slotId,
+            timeslot: slotId,
+            type: props.calendarType
+        }
+        // Trying to avoid duplicate entries
+        getMatch(availableTimeslots) &&
+        addDataAndSetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
+    };
+
+    const makeThisTimeslotUnavailable = () => {
+        deleteDataAndGetNewData(DELETE_PATH, GET_TIMESLOTS_PATH, {_id: slotId})
+    };
 
     // Era bom unir esse função com a de cima, mas hardcoded por enquanto:
     const checkIsWrongCalendarType = useCallback((context) => ( context.some(data =>
@@ -146,7 +153,7 @@ const TimeSlot = (props) => {
                 //add client adding logic for admin in onContextMenu
                 onContextMenu={(e) => toggleForm(e)}
                 >
-                <p>{props.timeRange[0]}:00</p>
+                <p>{dateObjInLocalTime.getHours()}:00</p>
                 {scheduled.filter(data =>   //filter only relevant for admin, if there is more than one user, set + symbol
                     //Virou meio bagunça essa coisa do !(isAdmin), cuidado
                     !(isAdmin && data.status === "rejected") && data.timeslot === slotId && data.type === props.calendarType).length > 1 && 
