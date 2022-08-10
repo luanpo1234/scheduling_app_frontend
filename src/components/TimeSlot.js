@@ -55,7 +55,7 @@ const TimeSlot = (props) => {
             type: props.calendarType
         }
         // Trying to avoid duplicate entries
-        getMatch(availableTimeslots) &&
+        !getMatch(availableTimeslots) &&
         addDataAndSetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
     };
 
