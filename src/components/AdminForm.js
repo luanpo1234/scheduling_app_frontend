@@ -1,6 +1,6 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import Axios from "axios";
 import UserScheduleRequest from "./UserScheduleRequest";
@@ -34,6 +34,10 @@ const AdminForm = (props) => {
             .then(res => setUserProfiles(userProfiles))
             .catch(error => console.error(error))
     }
+
+    useEffect(() => {
+        props.willDefineUser && getUserProfiles()
+    }, [props.willDefineUser])
 
     const handleCloseButton = () => {
         props.willDefineUser && props.setWillDefineUserFalse();
@@ -76,10 +80,7 @@ const AdminForm = (props) => {
                     </div>
                 )
             } else if (props.willDefineUser) {
-                // ContextMenu com um dropdown pra selecionar usuários,
-                // puxa os dados do usuário selecionado na DB nova,
-                // chama a função interna do handleSubmit do UserSchedule com esses dados
-                getUserProfiles();
+                //getUserProfiles() was being called several times without useEffect
                 return (
                     <div>
                         <h3>Marcar aula no dia {day}/{String(Number(month)+1)}/{year} das {startTime} às {endTime} horas para:</h3>

@@ -34,7 +34,6 @@ const Sidebar = ({ scheduled }) => {
                     {
                     const [ year, month, day, startTime, endTime ] = item.timeslot.split("-");
                     const thisDate = new Date(year, month, day);
-                    console.log(thisDate)
                     // Admin doesn't see rejected requests
                     if ( !(isAdmin && item.status === "rejected") &&
                     (thisDate >= new Date()) ){

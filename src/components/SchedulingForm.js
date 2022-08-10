@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import useTimeConversion from "../hooks/useTimeConversion";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import { sendEmail } from "../utils/emailJS";
@@ -7,11 +8,12 @@ const SchedulingForm = (props) => {
 
     const [notes, setNotes] = useState("");
     const [formSent, setFormSent] = useState(false);
+    const { convertToDateObj, incrementDays } = useTimeConversion();
     
     const { 
         scheduled,
         deleteDataAndGetNewData,
-        addDataAndGetNewData,
+        addDataAndSetNewData,
         DOMAIN,
         GET_USER_SCHEDULES_PATH,
         POST_USER_SCHEDULE_PATH
@@ -30,11 +32,27 @@ const SchedulingForm = (props) => {
 
     const handleSubmit = (e, willSendEmail=true)  => {
         e.preventDefault();
-        // If the button is clicked after form has been sent, delete entry.
-        if (formSent) {
+        const removeTimeslotUserData = () => {
             deleteDataAndGetNewData(DELETE_USER_SCHEDULE_PATH, GET_USER_SCHEDULES_PATH, {_id: props.id + user.sub});
             setFormSent(false);
-        } else if (user.name) {
+            props.toggleVisibility();
+        }
+        // If the button is clicked after form has been sent, delete entry.
+        if (formSent && e.target.name === "withdrawRequest") {
+            removeTimeslotUserData();
+        } else if (formSent && e.target.name === "cancelBooking") {
+            const thisTime = convertToDateObj(props.id)
+            const oneDayBeforeThisTime = incrementDays(thisTime, -1)
+
+            //Can only cancel 24h before booking
+            if (new Date() < oneDayBeforeThisTime){
+                removeTimeslotUserData();
+                //send email
+            } else if (new Date() >= oneDayBeforeThisTime) {
+                // Em vez disso, sumir o botão 24 horas antes?
+                alert("Não é possível desmarcar menos de 24 horas antes da aula.");
+            }
+        } else if (user.name && e.target.name ==="makeRequest") {
             const newSchedulingData = {
                 _id: props.id + user.sub,
                 timeslot: props.id,
@@ -45,16 +63,18 @@ const SchedulingForm = (props) => {
                 type: props.calendarType,
                 status: "pending"
             }
-            addDataAndGetNewData(POST_USER_SCHEDULE_PATH, GET_USER_SCHEDULES_PATH, newSchedulingData);
+            addDataAndSetNewData(POST_USER_SCHEDULE_PATH, GET_USER_SCHEDULES_PATH, newSchedulingData);
             setFormSent(true);
-            willSendEmail && sendEmail({
-                timeslot: props.id,
-                name: user.name,
-                url: window.location.href,
-                notes: notes,
-                emailTemplate: "toAdmin"
-            });
         }
+        willSendEmail && sendEmail({
+            // Não ideal, melhor tirar o e.target.name daqui e incluir as outras opções tb
+            actionType: e.target.name === "cancelBooking" ? "Cancelamento" : "Pedido de marcação",
+            timeslot: props.id,
+            name: user.name,
+            url: window.location.href,
+            notes: notes,
+            emailTemplate: "toAdmin"
+        });
     }
 
     const getContent = () => {
@@ -63,14 +83,23 @@ const SchedulingForm = (props) => {
                 return(
                     <div>
                         <h3>Obrigada por enviar seu pedido! Responderei em breve</h3>
-                        <button className="scheduling-form--button" type="submit" onClick={handleSubmit}>Desmarcar</button>
+                        <button className="scheduling-form--button" name="withdrawRequest" type="submit" onClick={handleSubmit}>Desmarcar</button>
                     </div>
                 )
             } else if (props.userDataForThisTimeslot.status === "accepted") {
                 return(
                     <div>
                         <h3>Aula marcada!</h3>
+                        <label htmlFor="text">Observações: </label>
                         <p><strong>Obs:</strong> {props.userDataForThisTimeslot.admin_notes}</p>
+                        <textarea
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                        />
+                        <button className="scheduling-form--button" name="cancelBooking" type="submit" onClick={handleSubmit}>Desmarcar</button>
                     </div>
                 )
             } else if (props.userDataForThisTimeslot.status === "rejected") {
@@ -96,7 +125,7 @@ const SchedulingForm = (props) => {
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                         />
-                        <button className="scheduling-form--button" type="submit" onClick={handleSubmit}>Enviar</button>
+                        <button className="scheduling-form--button" name="makeRequest" type="submit" onClick={handleSubmit}>Enviar</button>
                     </div>
                 </form>
             )

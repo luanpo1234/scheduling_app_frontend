@@ -9,11 +9,10 @@ const UserScheduleRequest = (props) => {
         POST_USER_SCHEDULE_PATH,
         GET_USER_SCHEDULES_PATH,
         DOMAIN,
-        addDataAndGetNewData
+        addDataAndSetNewData
     } = useContext(CalendarContext);
     const [notes, setNotes] = useState("");
 
-    // Passa esse bloco inteiro pro AdminForm
     const updateUserRequestStatus = (newStatus) => {
         Axios.post(`${DOMAIN}/updateUserRequestStatus`, 
         {params: {_id: props.userData._id}, update: {status: newStatus, admin_notes: notes}})
@@ -49,6 +48,7 @@ const UserScheduleRequest = (props) => {
     const handleSubmit = (e)  => {
         e.preventDefault();
         if (props.adminScheduling) {
+            props.userData.status = "accepted";
             const newSchedulingData = {
                 _id: props.userData.timeslot + props.userData.sub,
                 timeslot: props.userData.timeslot,
@@ -57,17 +57,20 @@ const UserScheduleRequest = (props) => {
                 email: props.userData.email,
                 sub: props.userData.sub,
                 type: props.calendarType,
-                status: "accepted"
+                status: props.userData.status
             }
             // Substitui esses por um upsert depois
-            addDataAndGetNewData(POST_USER_SCHEDULE_PATH, GET_USER_SCHEDULES_PATH, newSchedulingData);
-            props.toggleVisibility();
+            addDataAndSetNewData(
+                POST_USER_SCHEDULE_PATH,
+                GET_USER_SCHEDULES_PATH,
+                newSchedulingData,
+                // Data already gets set in update request below
+                false);
         }   //Run this anyway
             updateUserRequestAndSendEmail(e.target.name, props.userData)
     }
 
     return (
-        // Era melhor isso estar no nível do AdminForm mas tava muito complicado refaturar tudo
         props.adminScheduling ?
         <form>
             <h3>{props.userData.name}</h3>
@@ -91,9 +94,15 @@ const UserScheduleRequest = (props) => {
             { props.userData.status === "accepted" && <h4>Aula marcada!</h4> }
             { props.userData.status === "rejected" && <h4>Pedido recusado!</h4> }
             <p><strong>Obs. do aluno:</strong> {props.userData.user_notes}</p>
-            <button className="scheduling-form--button" name="accept" type="submit" onClick={handleSubmit}>Aceitar e deixar aberto</button>
-            <button className="scheduling-form--button" name="acceptAndMakeUnavailable" type="submit" onClick={handleSubmit}>Aceitar e fechar horário</button>
-            <button className="scheduling-form--button" name="reject" type="submit" onClick={handleSubmit}>Recusar</button>
+            <button className="scheduling-form--button" name="accept" type="submit" onClick={handleSubmit}>
+                Aceitar e deixar aberto
+                </button>
+            <button className="scheduling-form--button" name="acceptAndMakeUnavailable" type="submit" onClick={handleSubmit}>
+                Aceitar e fechar horário
+                </button>
+            <button className="scheduling-form--button" name="reject" type="submit" onClick={handleSubmit}>
+                {props.userData.status === "accepted" ? "Cancelar" : "Recusar"}
+                </button>
             <label htmlFor="text">Motivo: </label>
                 <textarea
                     type="text"

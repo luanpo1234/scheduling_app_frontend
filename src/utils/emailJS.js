@@ -11,6 +11,7 @@ const sendEmail = (data) => {
    console.log("Will send");
    const [ year, month, day, startTime, endTime ] = data.timeslot.split("-");
    const emailData = {
+      actionType: data.actionType, 
       name: data.name,
       day: day,
       month: String(Number(month)+1),

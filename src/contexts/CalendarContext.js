@@ -8,7 +8,7 @@ const CalendarContextProvider = ({ children }) => {
     const DOMAIN = process.env.REACT_APP_DOMAIN;
     const ADMIN_SUB = process.env.REACT_APP_ADMIN_SUB;
 
-    // Essas variáveis que estão sendo passadas deviam vir de um utils ou algo assim
+    // Esses métodos de conexão com a DB provavelmente seriam pra um custom hook
     const GET_USER_SCHEDULES_PATH = `${DOMAIN}/getUserSchedules`;
     const GET_TIMESLOTS_PATH = `${DOMAIN}/getAvailableTimeslots`;
     const GET_USER_PROFILE_PATH = `${DOMAIN}/getUserProfile`;
@@ -34,11 +34,11 @@ const CalendarContextProvider = ({ children }) => {
         .catch(error => alert("Erro de conexão: não foi possível deletar o item"));
     };
 
-    const addDataAndGetNewData = (postPath, getPath, data) => {
+    const addDataAndSetNewData = (postPath, getPath, data, setNewData=true) => {
         console.log("adding");
         Axios.post(postPath, data)
         .then(response => console.log("New data entry!"))
-        .then(response => getAndSetDBData(getPath))
+        .then(response => setNewData && getAndSetDBData(getPath))
         .catch(error => console.error(error.message))
         //.catch(error => alert("Erro de conexão: não foi possível inserir o item"));
     };
@@ -94,7 +94,7 @@ const CalendarContextProvider = ({ children }) => {
                 scheduled,
                 availableTimeslots,
                 deleteDataAndGetNewData,
-                addDataAndGetNewData,
+                addDataAndSetNewData,
                 getAndSetDBData,
                 isAdmin,
                 user,

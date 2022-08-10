@@ -14,7 +14,7 @@ const TimeSlot = (props) => {
 
     const { 
         availableTimeslots, //pro admin (acho)
-        addDataAndGetNewData,
+        addDataAndSetNewData,
         deleteDataAndGetNewData,
         scheduled,
         isAdmin,
@@ -41,7 +41,7 @@ const TimeSlot = (props) => {
             timeslot: slotId,
             type: props.calendarType
         }
-        addDataAndGetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
+        addDataAndSetNewData(ADDING_TIMESLOT_PATH, GET_TIMESLOTS_PATH, newTimeslot);
     };
 
     const makeThisTimeslotUnavailable = () => {

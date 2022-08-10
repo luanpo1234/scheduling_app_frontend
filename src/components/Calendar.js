@@ -14,6 +14,7 @@ const Calendar = (props) => {
     const { scheduled } = useContext(CalendarContext);
     
     // Increment date by `increment` days 
+    // Pega do hook!
     const incrementDate = (dateInput, increment)  => {
         const dateFormatTotime = new Date(dateInput);
         const increasedDate = new Date(dateFormatTotime.getTime() + (increment * 86400000));
