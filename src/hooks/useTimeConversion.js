@@ -13,13 +13,22 @@ const useTimeConversion = () => {
         const thisDate = new Date(year, month, day, startTime).toLocaleString("pt-BR", {timeZone: 'America/Sao_Paulo'});
         return thisDate;
         }
+    
+    const convertFromBrazilTime = (dateInput) => {
+        const newDate = new Date(dateInput);
+        const brazilTimeOffset = -420;
+        const localTimeOffset = dateInput.getTimezoneOffset();
+        const timeDiffFromBrazil = (Math.abs(localTimeOffset)-Math.abs(brazilTimeOffset));
+        newDate.setMinutes(newDate.getMinutes() - timeDiffFromBrazil)
+        return newDate;
+    }
 
     const incrementDays = (dateInput, increment)  => {
         const dateFormatTotime = new Date(dateInput);
         const increasedDate = new Date(dateFormatTotime.getTime() + (increment * 86400000));
         return increasedDate;
     }
-    return {convertToDateObj, incrementDays};
+    return {convertToDateObj, convertFromBrazilTime, incrementDays};
 }
 
 export default useTimeConversion;

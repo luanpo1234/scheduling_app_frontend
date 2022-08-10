@@ -32,6 +32,9 @@ const Sidebar = ({ scheduled }) => {
                 <div className="loading-container"><Loading /></div> :
                 scheduled.map(item =>
                     {
+                    if (item.timeslot === undefined) {
+                        console.log(item);
+                    }
                     const [ year, month, day, startTime, endTime ] = item.timeslot.split("-");
                     const thisDate = new Date(year, month, day);
                     // Admin doesn't see rejected requests

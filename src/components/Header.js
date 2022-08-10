@@ -19,7 +19,7 @@ const Header = () => {
                 isAuthenticated ?
                 <>
                     <h1>Aulas com Luiza</h1>
-                    <div>
+                    <div class="profile-logbtn-container">
                         <Profile />
                         <LogoutButton />
                     </div>
