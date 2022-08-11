@@ -23,13 +23,19 @@ const AdminForm = (props) => {
             data.timeslot === props.id);
         return resData;
         };
-    
+    // renomeia isso e o userProfiles pq no push vc tá colocando informações de scheduling, getSchedulingDataFromProfile ou algo assim
     const getUserProfiles = () => {
         const userProfiles = [];
         Axios.get(GET_USER_PROFILE_PATH)
             .then(response => response.data)
             .then(data => data.map(user =>
-                userProfiles.push({ ...user, timeslot: props.id })
+                userProfiles.push({ 
+                    ...user, 
+                    timeslot: props.id,
+                    _id: props.id + user.sub,
+                    admin_notes: "",
+                    type: props.calendarType,
+                    status: "pending" })
             ))
             .then(res => setUserProfiles(userProfiles))
             .catch(error => console.error(error))
@@ -49,9 +55,8 @@ const AdminForm = (props) => {
                 <UserScheduleRequest 
                     adminScheduling={true}
                     toggleVisibility={() => props.toggleVisibility()}
-                    calendarType={props.calendarType}
                     makeThisTimeslotUnavailable={props.makeThisTimeslotUnavailable}
-                    userData={userData} 
+                    userData={userData}
                     key={userData.sub}
                 />
             )

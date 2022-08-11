@@ -6,6 +6,7 @@ import Axios from "axios";
 const UserScheduleRequest = (props) => {
     const { 
         getAndSetDBData,
+        scheduled,
         POST_USER_SCHEDULE_PATH,
         GET_USER_SCHEDULES_PATH,
         DOMAIN,
@@ -50,16 +51,18 @@ const UserScheduleRequest = (props) => {
         if (props.adminScheduling) {
             props.userData.status = "accepted";
             const newSchedulingData = {
-                _id: props.userData.timeslot + props.userData.sub,
+                _id: props.userData._id,
                 timeslot: props.userData.timeslot,
                 name: props.userData.name,
                 admin_notes: notes,
                 email: props.userData.email,
                 sub: props.userData.sub,
-                type: props.calendarType,
+                type: props.userData.type,
                 status: props.userData.status
             }
-            // Substitui esses por um upsert depois
+            // Gambiarra, substitui isso e o update abaixo por um upsert depois
+            !(scheduled.some(data =>
+                data._id === props.userData._id)) &&
             addDataAndSetNewData(
                 POST_USER_SCHEDULE_PATH,
                 GET_USER_SCHEDULES_PATH,
